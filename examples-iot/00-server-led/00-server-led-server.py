@@ -1,16 +1,10 @@
 from flask import Flask, redirect
 
 app = Flask(__name__)
-
 led_state = 0
 
-@app.route('/')
-def index():
-    return str(led_state)
-
-@app.route('/set/')
-def state_changer():
-    return """
+STATE_CHANGER_PAGE = \
+    """
     <!DOCTYPE HTML>
     <html>
     <head>
@@ -19,7 +13,8 @@ def state_changer():
         body    { width: 45em; margin:auto; margin-top: 2em; }
         a       { text-decoration: none; color:white;
                   font-weight: bold; font-size:3em; }
-        div     { min-width: 30em; margin:auto; padding:5em; background:rgb(187, 187, 187); }
+        div     { min-width: 30em; margin:auto; padding:5em;
+                  text-align: center; background:rgb(187, 187, 187); }
         .on     { background: rgb(241, 101, 41); }
         .off    { background: rgb(96, 144, 255); }
         </style>
@@ -31,6 +26,14 @@ def state_changer():
     </body>
     </html>
     """
+
+@app.route('/')
+def index():
+    return str(led_state)
+
+@app.route('/set/')
+def state_changer():
+    return STATE_CHANGER_PAGE
 
 @app.route('/set/<state>/')
 def chnage_state(state):
